@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ShadowBase</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,6 +31,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
+
     background:
     radial-gradient(circle at top left,#2563eb 0%,transparent 30%),
     radial-gradient(circle at bottom right,#7c3aed 0%,transparent 30%),
@@ -37,13 +39,16 @@ body{
 }
 
 .login-box{
-    width:400px;
+    width:420px;
     padding:40px;
     border-radius:28px;
+
     background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(16px);
+
     border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter:blur(18px);
-    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
 }
 
 .login-box h1{
@@ -52,7 +57,7 @@ body{
 }
 
 .login-box p{
-    color:#9ca3af;
+    color:#94a3b8;
     margin-bottom:28px;
 }
 
@@ -63,17 +68,16 @@ body{
 .input-group label{
     display:block;
     margin-bottom:8px;
-    font-size:14px;
 }
 
 .input-group input{
     width:100%;
     padding:14px;
     border:none;
-    outline:none;
-    background:#111827;
     border-radius:14px;
+    background:#111827;
     color:white;
+    outline:none;
 }
 
 .login-btn{
@@ -81,15 +85,12 @@ body{
     padding:15px;
     border:none;
     border-radius:14px;
-    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+
     color:white;
     font-weight:700;
     cursor:pointer;
-    margin-top:10px;
-}
-
-.login-btn:hover{
-    opacity:0.9;
 }
 
 /* DASHBOARD */
@@ -101,21 +102,26 @@ body{
 }
 
 .sidebar{
-    width:260px;
+    width:270px;
     height:100vh;
     position:fixed;
     left:0;
     top:0;
-    background:#0f172a;
-    border-right:1px solid rgba(255,255,255,0.06);
+
     overflow-y:auto;
+
+    background:#0f172a;
+
+    border-right:1px solid rgba(255,255,255,0.06);
+
     padding:24px;
 }
 
 .logo{
-    font-size:32px;
+    font-size:34px;
     font-weight:800;
     margin-bottom:30px;
+
     background:linear-gradient(135deg,#60a5fa,#a78bfa);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
@@ -140,14 +146,14 @@ body{
 
 .menu button:hover{
     background:#334155;
-    transform:translateX(4px);
+    transform:translateX(5px);
 }
 
 .main{
-    margin-left:260px;
-    padding:30px;
+    margin-left:270px;
     height:100vh;
     overflow-y:auto;
+    padding:30px;
 }
 
 .topbar{
@@ -159,13 +165,13 @@ body{
 
 .money-box{
     background:linear-gradient(135deg,#16a34a,#22c55e);
-    padding:18px 28px;
+    padding:18px 30px;
     border-radius:18px;
-    font-size:22px;
-    font-weight:700;
+    font-size:24px;
+    font-weight:800;
 }
 
-.grid{
+.cards{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
@@ -183,7 +189,7 @@ body{
 }
 
 .card p{
-    color:#9ca3af;
+    color:#94a3b8;
     line-height:1.5;
 }
 
@@ -203,7 +209,7 @@ body{
 }
 
 .section{
-    margin-bottom:50px;
+    margin-bottom:55px;
 }
 
 .enemy{
@@ -211,6 +217,7 @@ body{
     border-radius:22px;
     padding:22px;
     margin-bottom:18px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -218,8 +225,8 @@ body{
 
 .attack-btn{
     background:#dc2626;
-    color:white;
     border:none;
+    color:white;
     padding:12px 18px;
     border-radius:12px;
     cursor:pointer;
@@ -242,14 +249,22 @@ body{
     padding:18px;
 }
 
-.player-box{
-    background:#111827;
-    padding:20px;
-    border-radius:18px;
-    margin-bottom:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.notification{
+    position:fixed;
+    top:20px;
+    right:20px;
+
+    background:#2563eb;
+    padding:18px 22px;
+    border-radius:14px;
+
+    z-index:999;
+    display:none;
+}
+
+.cooldown{
+    color:#f87171;
+    margin-top:10px;
 }
 
 ::-webkit-scrollbar{
@@ -265,6 +280,8 @@ body{
 </head>
 <body>
 
+<div class="notification" id="notification"></div>
+
 <!-- LOGIN -->
 
 <div id="loginPage">
@@ -272,16 +289,19 @@ body{
     <div class="login-box">
 
         <h1>ShadowBase</h1>
-        <p>Build your empire. Raid enemies. Become unstoppable.</p>
+
+        <p>
+            Build your empire. Raid players. Become unstoppable.
+        </p>
 
         <div class="input-group">
             <label>Username</label>
-            <input type="text" id="username" placeholder="Username">
+            <input type="text" id="username">
         </div>
 
         <div class="input-group">
             <label>Password</label>
-            <input type="password" id="password" placeholder="Password">
+            <input type="password" id="password">
         </div>
 
         <button class="login-btn" onclick="login()">
@@ -300,16 +320,51 @@ body{
 
     <div class="sidebar">
 
-        <div class="logo">ShadowBase</div>
+        <div class="logo">
+            ShadowBase
+        </div>
 
         <div class="menu">
 
-            <button onclick="goto('miners')">⛏ Mining</button>
-            <button onclick="goto('upgrades')">⬆ Upgrades</button>
-            <button onclick="goto('base')">🛡 Base</button>
-            <button onclick="goto('bots')">🤖 Bot Raids</button>
-            <button onclick="goto('players')">🌍 Player Raids</button>
-            <button onclick="goto('stats')">📊 Stats</button>
+            <button onclick="goto('overview')">
+                🏠 Overview
+            </button>
+
+            <button onclick="goto('miners')">
+                ⛏ Mining
+            </button>
+
+            <button onclick="goto('upgrades')">
+                ⬆ Upgrades
+            </button>
+
+            <button onclick="goto('defense')">
+                🛡 Defense
+            </button>
+
+            <button onclick="goto('bots')">
+                🤖 Bot Raids
+            </button>
+
+            <button onclick="goto('players')">
+                🌍 Player Raids
+            </button>
+
+            <button onclick="goto('clans')">
+                👥 Clans
+            </button>
+
+            <button onclick="goto('leaderboard')">
+                🏆 Leaderboard
+            </button>
+
+            <button onclick="goto('research')">
+                🧪 Research
+            </button>
+
+            <button onclick="goto('market')">
+                💰 Black Market
+            </button>
 
         </div>
 
@@ -322,10 +377,15 @@ body{
         <div class="topbar">
 
             <div>
-                <h1 id="welcomeText">Welcome Commander</h1>
-                <p style="color:#9ca3af;margin-top:5px;">
-                    Your underground empire grows stronger.
+
+                <h1 id="welcomeText">
+                    Welcome Commander
+                </h1>
+
+                <p style="color:#94a3b8;margin-top:5px;">
+                    Your empire grows stronger every second.
                 </p>
+
             </div>
 
             <div class="money-box">
@@ -334,20 +394,66 @@ body{
 
         </div>
 
+        <!-- OVERVIEW -->
+
+        <section id="overview" class="section">
+
+            <h2 style="margin-bottom:20px;">
+                Base Overview
+            </h2>
+
+            <div class="status-grid">
+
+                <div class="status-box">
+                    <h3>Base Level</h3>
+                    <p id="baseLevel">1</p>
+                </div>
+
+                <div class="status-box">
+                    <h3>Shield</h3>
+                    <p id="shieldLevel">1</p>
+                </div>
+
+                <div class="status-box">
+                    <h3>Defense</h3>
+                    <p id="defenseLevel">1</p>
+                </div>
+
+                <div class="status-box">
+                    <h3>Income</h3>
+                    <p>$<span id="incomeRate">0</span>/sec</p>
+                </div>
+
+                <div class="status-box">
+                    <h3>Wins</h3>
+                    <p id="wins">0</p>
+                </div>
+
+                <div class="status-box">
+                    <h3>Losses</h3>
+                    <p id="losses">0</p>
+                </div>
+
+            </div>
+
+        </section>
+
         <!-- MINERS -->
 
         <section id="miners" class="section">
 
-            <h2 style="margin-bottom:20px;">Mining Operations</h2>
+            <h2 style="margin-bottom:20px;">
+                Mining Operations
+            </h2>
 
-            <div class="grid">
+            <div class="cards">
 
                 <div class="card">
                     <h3>Basic Miner</h3>
                     <p>+$5/sec passive income</p>
 
                     <button class="buy-btn"
-                    onclick="buyMiner(250,5,'Basic Miner')">
+                    onclick="buyMiner(250,5)">
                     Buy - $250
                     </button>
                 </div>
@@ -357,7 +463,7 @@ body{
                     <p>+$20/sec passive income</p>
 
                     <button class="buy-btn"
-                    onclick="buyMiner(1200,20,'Advanced Miner')">
+                    onclick="buyMiner(1200,20)">
                     Buy - $1200
                     </button>
                 </div>
@@ -367,7 +473,7 @@ body{
                     <p>+$80/sec passive income</p>
 
                     <button class="buy-btn"
-                    onclick="buyMiner(5000,80,'Quantum Miner')">
+                    onclick="buyMiner(5000,80)">
                     Buy - $5000
                     </button>
                 </div>
@@ -380,37 +486,39 @@ body{
 
         <section id="upgrades" class="section">
 
-            <h2 style="margin-bottom:20px;">Upgrades</h2>
+            <h2 style="margin-bottom:20px;">
+                Upgrades
+            </h2>
 
-            <div class="grid">
+            <div class="cards">
 
                 <div class="card">
-                    <h3>Shield System</h3>
-                    <p>Boosts defense against raids.</p>
+                    <h3>Shield Generator</h3>
+                    <p>Increase defense against attacks.</p>
 
                     <button class="buy-btn"
-                    onclick="upgrade('Shield',500)">
-                    Upgrade - $500
+                    onclick="upgradeShield()">
+                    Upgrade - $1000
                     </button>
                 </div>
 
                 <div class="card">
-                    <h3>Cloaking</h3>
-                    <p>Harder for players to detect you.</p>
+                    <h3>Defense Turrets</h3>
+                    <p>Improves your raid protection.</p>
 
                     <button class="buy-btn"
-                    onclick="upgrade('Cloaking',2500)">
-                    Upgrade - $2500
-                    </button>
-                </div>
-
-                <div class="card">
-                    <h3>Turrets</h3>
-                    <p>Improves raid defense success.</p>
-
-                    <button class="buy-btn"
-                    onclick="upgrade('Turrets',1500)">
+                    onclick="upgradeDefense()">
                     Upgrade - $1500
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Base Expansion</h3>
+                    <p>Increase overall power.</p>
+
+                    <button class="buy-btn"
+                    onclick="upgradeBase()">
+                    Upgrade - $3000
                     </button>
                 </div>
 
@@ -418,32 +526,29 @@ body{
 
         </section>
 
-        <!-- BASE -->
+        <!-- DEFENSE -->
 
-        <section id="base" class="section">
+        <section id="defense" class="section">
 
-            <h2 style="margin-bottom:20px;">Base Status</h2>
+            <h2 style="margin-bottom:20px;">
+                Defense Systems
+            </h2>
 
-            <div class="status-grid">
+            <div class="cards">
 
-                <div class="status-box">
-                    <h3>Shield</h3>
-                    <p id="shieldLevel">Level 1</p>
+                <div class="card">
+                    <h3>Anti-Air</h3>
+                    <p>Destroys enemy drones.</p>
                 </div>
 
-                <div class="status-box">
+                <div class="card">
                     <h3>Cloaking</h3>
-                    <p id="cloakLevel">Disabled</p>
+                    <p>Harder for enemies to find.</p>
                 </div>
 
-                <div class="status-box">
-                    <h3>Defense</h3>
-                    <p id="turretLevel">Level 1</p>
-                </div>
-
-                <div class="status-box">
-                    <h3>Passive Income</h3>
-                    <p>$<span id="incomeRate">0</span>/sec</p>
+                <div class="card">
+                    <h3>Laser Grid</h3>
+                    <p>High-tech defense walls.</p>
                 </div>
 
             </div>
@@ -454,13 +559,15 @@ body{
 
         <section id="bots" class="section">
 
-            <h2 style="margin-bottom:20px;">Bot Bases</h2>
+            <h2 style="margin-bottom:20px;">
+                Bot Bases
+            </h2>
 
             <div class="enemy">
 
                 <div>
                     <h3>Shadow Base</h3>
-                    <p>Raid Cost: $500 | Easy</p>
+                    <p>Easy • Entry Cost $500</p>
                 </div>
 
                 <button class="attack-btn"
@@ -474,7 +581,7 @@ body{
 
                 <div>
                     <h3>Void Fortress</h3>
-                    <p>Raid Cost: $5000 | Medium</p>
+                    <p>Medium • Entry Cost $5000</p>
                 </div>
 
                 <button class="attack-btn"
@@ -488,7 +595,7 @@ body{
 
                 <div>
                     <h3>Omega Citadel</h3>
-                    <p>Raid Cost: $25000 | Hard</p>
+                    <p>Hard • Entry Cost $25000</p>
                 </div>
 
                 <button class="attack-btn"
@@ -504,9 +611,11 @@ body{
 
         <section id="players" class="section">
 
-            <h2 style="margin-bottom:20px;">Player Bases</h2>
+            <h2 style="margin-bottom:20px;">
+                Player Bases
+            </h2>
 
-            <div class="player-box">
+            <div class="enemy">
 
                 <div>
                     <h3>CyberGhost</h3>
@@ -514,68 +623,147 @@ body{
                 </div>
 
                 <button class="attack-btn"
-                onclick="raidPlayer('CyberGhost')">
+                onclick="raidPlayer('CyberGhost',2)">
                 Attack
                 </button>
 
             </div>
 
-            <div class="player-box">
-
-                <div>
-                    <h3>NightHunter</h3>
-                    <p>Defense Level 5</p>
-                </div>
-
-                <button class="attack-btn"
-                onclick="raidPlayer('NightHunter')">
-                Attack
-                </button>
-
-            </div>
-
-            <div class="player-box">
+            <div class="enemy">
 
                 <div>
                     <h3>DarkNova</h3>
-                    <p>Defense Level 9</p>
+                    <p>Defense Level 6</p>
                 </div>
 
                 <button class="attack-btn"
-                onclick="raidPlayer('DarkNova')">
+                onclick="raidPlayer('DarkNova',6)">
                 Attack
                 </button>
+
+            </div>
+
+            <div class="enemy">
+
+                <div>
+                    <h3>NightHunter</h3>
+                    <p>Defense Level 10</p>
+                </div>
+
+                <button class="attack-btn"
+                onclick="raidPlayer('NightHunter',10)">
+                Attack
+                </button>
+
+            </div>
+
+            <div class="cooldown" id="cooldownText"></div>
+
+        </section>
+
+        <!-- CLANS -->
+
+        <section id="clans" class="section">
+
+            <h2 style="margin-bottom:20px;">
+                Clans
+            </h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Create Clan</h3>
+                    <p>Build your own empire alliance.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Clan Wars</h3>
+                    <p>Fight other clans for rewards.</p>
+                </div>
 
             </div>
 
         </section>
 
-        <!-- STATS -->
+        <!-- LEADERBOARD -->
 
-        <section id="stats" class="section">
+        <section id="leaderboard" class="section">
 
-            <h2 style="margin-bottom:20px;">Stats</h2>
+            <h2 style="margin-bottom:20px;">
+                Leaderboard
+            </h2>
 
-            <div class="status-grid">
+            <div class="cards">
 
-                <div class="status-box">
-                    <h3>Total Wins</h3>
-                    <p id="wins">0</p>
+                <div class="card">
+                    <h3>1. ShadowKing</h3>
+                    <p>$950000</p>
                 </div>
 
-                <div class="status-box">
-                    <h3>Total Losses</h3>
-                    <p id="losses">0</p>
+                <div class="card">
+                    <h3>2. DarkNova</h3>
+                    <p>$720000</p>
                 </div>
 
-                <div class="status-box">
-                    <h3>Total Miners</h3>
-                    <p id="minersOwned">0</p>
+                <div class="card">
+                    <h3>3. XRain</h3>
+                    <p>$250000</p>
                 </div>
 
-                <div class="status-box">
-                    <h3>Base Level</h3>
-                    <p id="baseLevel">1</p>
+            </div>
+
+        </section>
+
+        <!-- RESEARCH -->
+
+        <section id="research" class="section">
+
+            <h2 style="margin-bottom:20px;">
+                Research Lab
+            </h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>AI Miners</h3>
+                    <p>Boost all miners by 20%</p>
+                </div>
+
+                <div class="card">
+                    <h3>Energy Reactor</h3>
+                    <p>Unlock futuristic power systems.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- MARKET -->
+
+        <section id="market" class="section">
+
+            <h2 style="margin-bottom:20px;">
+                Black Market
+            </h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Rare Shield</h3>
+                    <p>Massive raid protection.</p>
+
+                    <button class="buy-btn">
+                        Buy - $10000
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Stealth Drone</h3>
+                    <p>Boost raid success chance.</p>
+
+                    <button class="buy-btn">
+                        Buy - $25000
+                    </button>
                 </div>
 
             </div>
@@ -588,20 +776,17 @@ body{
 
 <script>
 
-/* PLAYER DATA */
-
 let money = 1000;
 let income = 0;
+
+let shield = 1;
+let defense = 1;
+let baseLevel = 1;
 
 let wins = 0;
 let losses = 0;
 
-let shield = 1;
-let turrets = 1;
-let cloaking = false;
-
-let minersOwned = 0;
-let baseLevel = 1;
+let raidCooldown = false;
 
 /* LOGIN */
 
@@ -614,21 +799,20 @@ function login(){
     document.getElementById("password").value;
 
     if(username === "" || password === ""){
-        alert("Fill in all fields.");
+        notify("Fill all fields.");
         return;
     }
 
     localStorage.setItem("shadowbase_user",username);
 
-    openDashboard(username);
-}
+    document.getElementById("loginPage")
+    .style.display = "none";
 
-function openDashboard(username){
+    document.getElementById("dashboard")
+    .style.display = "flex";
 
-    document.getElementById("loginPage").style.display="none";
-    document.getElementById("dashboard").style.display="flex";
-
-    document.getElementById("welcomeText").innerText =
+    document.getElementById("welcomeText")
+    .innerText =
     "Welcome " + username;
 
 }
@@ -637,7 +821,8 @@ function openDashboard(username){
 
 function goto(id){
 
-    document.getElementById(id).scrollIntoView({
+    document.getElementById(id)
+    .scrollIntoView({
         behavior:"smooth"
     });
 
@@ -647,35 +832,25 @@ function goto(id){
 
 function updateMoney(){
 
-    document.getElementById("money").innerText =
-    Math.floor(money);
+    document.getElementById("money")
+    .innerText = Math.floor(money);
 
 }
 
-/* BUY MINERS */
+/* NOTIFICATIONS */
 
-function buyMiner(cost,rate,name){
+function notify(text){
 
-    if(money < cost){
-        alert("Not enough money.");
-        return;
-    }
+    const box =
+    document.getElementById("notification");
 
-    money -= cost;
+    box.innerText = text;
 
-    income += rate;
+    box.style.display = "block";
 
-    minersOwned++;
-
-    updateMoney();
-
-    document.getElementById("incomeRate").innerText =
-    income;
-
-    document.getElementById("minersOwned").innerText =
-    minersOwned;
-
-    alert(name + " purchased!");
+    setTimeout(()=>{
+        box.style.display = "none";
+    },3000);
 
 }
 
@@ -689,90 +864,132 @@ setInterval(()=>{
 
 },1000);
 
-/* UPGRADES */
+/* BUY MINERS */
 
-function upgrade(type,cost){
+function buyMiner(cost,rate){
 
     if(money < cost){
-        alert("Not enough money.");
+        notify("Not enough money.");
         return;
     }
 
     money -= cost;
 
+    income += rate;
+
+    document.getElementById("incomeRate")
+    .innerText = income;
+
     updateMoney();
 
-    if(type === "Shield"){
+    notify("Miner purchased!");
 
-        shield++;
+}
 
-        document.getElementById("shieldLevel").innerText =
-        "Level " + shield;
+/* UPGRADES */
 
+function upgradeShield(){
+
+    if(money < 1000){
+        notify("Need more money.");
+        return;
     }
 
-    if(type === "Turrets"){
+    money -= 1000;
 
-        turrets++;
+    shield++;
 
-        document.getElementById("turretLevel").innerText =
-        "Level " + turrets;
+    document.getElementById("shieldLevel")
+    .innerText = shield;
 
+    updateMoney();
+
+    notify("Shield upgraded!");
+
+}
+
+function upgradeDefense(){
+
+    if(money < 1500){
+        notify("Need more money.");
+        return;
     }
 
-    if(type === "Cloaking"){
+    money -= 1500;
 
-        cloaking = true;
+    defense++;
 
-        document.getElementById("cloakLevel").innerText =
-        "Enabled";
+    document.getElementById("defenseLevel")
+    .innerText = defense;
 
+    updateMoney();
+
+    notify("Defense upgraded!");
+
+}
+
+function upgradeBase(){
+
+    if(money < 3000){
+        notify("Need more money.");
+        return;
     }
+
+    money -= 3000;
 
     baseLevel++;
 
-    document.getElementById("baseLevel").innerText =
-    baseLevel;
+    document.getElementById("baseLevel")
+    .innerText = baseLevel;
 
-    alert(type + " upgraded!");
+    updateMoney();
+
+    notify("Base upgraded!");
 
 }
 
 /* BOT RAIDS */
 
-function raidBot(name,requiredMoney,winChance){
+function raidBot(name,requiredMoney,chance){
+
+    if(raidCooldown){
+        notify("Raid cooldown active.");
+        return;
+    }
 
     if(money < requiredMoney){
 
-        alert(
-            "You need $" +
+        notify(
+            "Need $" +
             requiredMoney +
-            " to raid this base."
+            " to raid."
         );
 
         return;
     }
 
-    const random = Math.random();
+    startCooldown();
 
-    if(random < winChance){
+    const success =
+    Math.random() < chance;
+
+    if(success){
 
         const reward =
-        Math.floor(requiredMoney * (1 + Math.random()));
+        Math.floor(requiredMoney *
+        (1 + Math.random()));
 
         money += reward;
 
         wins++;
 
-        document.getElementById("wins").innerText =
-        wins;
+        document.getElementById("wins")
+        .innerText = wins;
 
         updateMoney();
 
-        alert(
-            "RAID SUCCESS\n\n" +
-            "You defeated " + name +
-            "\nReward: $" + reward
+        notify(
+            "SUCCESS • +" + reward
         );
 
     }else{
@@ -784,14 +1001,13 @@ function raidBot(name,requiredMoney,winChance){
 
         losses++;
 
-        document.getElementById("losses").innerText =
-        losses;
+        document.getElementById("losses")
+        .innerText = losses;
 
         updateMoney();
 
-        alert(
-            "RAID FAILED\n\n" +
-            "You lost $" + loss
+        notify(
+            "FAILED • -" + loss
         );
 
     }
@@ -800,28 +1016,45 @@ function raidBot(name,requiredMoney,winChance){
 
 /* PLAYER RAIDS */
 
-function raidPlayer(player){
+function raidPlayer(player,enemyDefense){
+
+    if(raidCooldown){
+        notify("Raid cooldown active.");
+        return;
+    }
+
+    startCooldown();
+
+    const chance =
+    Math.max(
+        0.15,
+        0.7 - (enemyDefense * 0.05)
+    );
 
     const success =
-    Math.random() < 0.5;
+    Math.random() < chance;
 
     if(success){
 
         const reward =
-        Math.floor(Math.random() * 3000) + 500;
+        Math.floor(
+            Math.random() * 5000
+        ) + 500;
 
         money += reward;
 
         wins++;
 
-        document.getElementById("wins").innerText =
-        wins;
+        document.getElementById("wins")
+        .innerText = wins;
 
         updateMoney();
 
-        alert(
-            "You raided " + player +
-            "\nStolen: $" + reward
+        notify(
+            "Raided " +
+            player +
+            " • +" +
+            reward
         );
 
     }else{
@@ -833,17 +1066,53 @@ function raidPlayer(player){
 
         losses++;
 
-        document.getElementById("losses").innerText =
-        losses;
+        document.getElementById("losses")
+        .innerText = losses;
 
         updateMoney();
 
-        alert(
-            "Raid failed against " + player +
-            "\nLost: $" + loss
+        notify(
+            "Raid failed • -" +
+            loss
         );
 
     }
+
+}
+
+/* RAID COOLDOWN */
+
+function startCooldown(){
+
+    raidCooldown = true;
+
+    let seconds = 15;
+
+    const text =
+    document.getElementById("cooldownText");
+
+    text.innerText =
+    "Raid Cooldown: 15s";
+
+    const timer = setInterval(()=>{
+
+        seconds--;
+
+        text.innerText =
+        "Raid Cooldown: " +
+        seconds + "s";
+
+        if(seconds <= 0){
+
+            clearInterval(timer);
+
+            raidCooldown = false;
+
+            text.innerText = "";
+
+        }
+
+    },1000);
 
 }
 
@@ -852,11 +1121,24 @@ function raidPlayer(player){
 window.onload = ()=>{
 
     const savedUser =
-    localStorage.getItem("shadowbase_user");
+    localStorage.getItem(
+        "shadowbase_user"
+    );
 
     if(savedUser){
 
-        openDashboard(savedUser);
+        document.getElementById(
+            "loginPage"
+        ).style.display = "none";
+
+        document.getElementById(
+            "dashboard"
+        ).style.display = "flex";
+
+        document.getElementById(
+            "welcomeText"
+        ).innerText =
+        "Welcome " + savedUser;
 
     }
 
